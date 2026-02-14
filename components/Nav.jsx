@@ -40,45 +40,44 @@ export default function Nav() {
 
     return (
         <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-border-main">
-            <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+            <div className="container mx-auto px-4 h-16 flex items-center justify-between relative">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
                     <span className="text-2xl pt-1">🌿</span>
                     <span className="text-xl font-bold text-green-dark font-serif tracking-tight">Withle</span>
                 </Link>
 
-                {/* Desktop Menu */}
-                <div className="hidden md:flex gap-8 text-text-secondary font-medium items-center">
+                {/* Center Menu (Absolute centered for precise alignment) */}
+                <div className="hidden md:flex gap-8 text-text-secondary font-medium items-center absolute left-1/2 -translate-x-1/2">
                     <Link href="/" className="hover:text-green-mid transition-colors">장례식장 찾기</Link>
                     <Link href="/memorial/intro.html" className="hover:text-green-mid transition-colors">추모 공간</Link>
-                    {user ? (
-                        <div className="flex items-center gap-4">
-                            <span className="text-sm text-text-muted flex items-center gap-1">
-                                <User className="w-4 h-4" />
-                                {user.email?.split('@')[0]}님
-                            </span>
-                            <button
-                                onClick={handleLogout}
-                                className="text-sm text-text-secondary hover:text-red-500 transition-colors flex items-center gap-1"
-                            >
-                                <LogOut className="w-4 h-4" />
-                                로그아웃
-                            </button>
-                        </div>
-                    ) : (
-                        <Link href="/login" className="px-5 py-2 rounded-full border border-green-main text-green-main hover:bg-green-main hover:text-white transition-all font-semibold text-sm">
-                            로그인
-                        </Link>
-                    )}
+                    <Link href="#" className="hover:text-green-mid transition-colors">장례절차</Link>
                 </div>
 
-                {/* CTA Button and Mobile Menu Toggle */}
+                {/* Right Side: Login/User & Mobile Toggle */}
                 <div className="flex items-center gap-4">
-                    <div className="hidden md:block">
-                        <Link href="/memorial/intro.html"
-                            className="bg-green-main hover:bg-green-mid text-white px-5 py-2 rounded-full font-semibold transition-all hover:shadow-lg text-sm start-memorial-btn">
-                            추모 공간 만들기
-                        </Link>
+                    {/* Desktop Login/User */}
+                    <div className="hidden md:flex items-center">
+                        {user ? (
+                            <div className="flex items-center gap-4">
+                                <span className="text-sm text-text-muted flex items-center gap-1">
+                                    <User className="w-4 h-4" />
+                                    {user.email?.split('@')[0]}님
+                                </span>
+                                <button
+                                    onClick={handleLogout}
+                                    className="text-sm text-text-secondary hover:text-red-500 transition-colors flex items-center gap-1"
+                                >
+                                    <LogOut className="w-4 h-4" />
+                                    로그아웃
+                                </button>
+                            </div>
+                        ) : (
+                            <Link href="/login"
+                                className="bg-green-main hover:bg-green-mid text-white px-5 py-2 rounded-full font-semibold transition-all hover:shadow-lg text-sm start-memorial-btn">
+                                로그인
+                            </Link>
+                        )}
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -101,6 +100,9 @@ export default function Nav() {
                         <Link href="/memorial/intro.html" onClick={() => setIsMobileMenuOpen(false)} className="py-2 border-b border-gray-100">
                             추모 공간
                         </Link>
+                        <Link href="#" onClick={() => setIsMobileMenuOpen(false)} className="py-2 border-b border-gray-100">
+                            장례절차
+                        </Link>
 
                         {user ? (
                             <div className="flex flex-col gap-4 mt-4">
@@ -121,13 +123,6 @@ export default function Nav() {
                                 로그인
                             </Link>
                         )}
-
-                        <div className="mt-8">
-                            <Link href="/memorial/intro.html" onClick={() => setIsMobileMenuOpen(false)}
-                                className="w-full block text-center bg-green-main text-white py-3.5 rounded-xl font-bold">
-                                추모 공간 만들기
-                            </Link>
-                        </div>
                     </div>
                 </div>
             )}
