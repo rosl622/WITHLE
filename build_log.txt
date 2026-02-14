@@ -1,0 +1,30 @@
+
+> withle-v2@0.1.0 build
+> next build
+
+??Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+??Compiled successfully in 2.2s
+  Running TypeScript ...
+  Collecting page data using 15 workers ...
+  Generating static pages using 15 workers (0/7) ...
+  Generating static pages using 15 workers (1/7) 
+  Generating static pages using 15 workers (3/7) 
+  Generating static pages using 15 workers (5/7) 
+??Generating static pages using 15 workers (7/7) in 503.8ms
+  Finalizing page optimization ...
+
+Route (app)
+????/
+????/_not-found
+????/admin/dashboard
+??? /api/chat
+??? /funeral-home/[id]
+????/reservation/success
+
+
+?? (Static)   prerendered as static content
+?  (Dynamic)  server-rendered on demand
+

@@ -1,19 +1,16 @@
-// api/tripo.js
-// Vercel Serverless Function to proxy Tripo API requests (Real Implementation)
+import { NextResponse } from 'next/server';
 
-export default async function handler(req, res) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method Not Allowed' });
-    }
-
-    const apiKey = process.env.TRIPO_API_KEY;
-    if (!apiKey) {
-        return res.status(500).json({ error: 'Server Config Error: TRIPO_API_KEY missing' });
-    }
-
-    const { action, payload } = req.body;
-
+export async function POST(request) {
     try {
+        const apiKey = process.env.TRIPO_API_KEY;
+        if (!apiKey) {
+            return NextResponse.json(
+                { error: 'Server Config Error: TRIPO_API_KEY missing' },
+                { status: 500 }
+            );
+        }
+
+        const { action, payload } = await request.json();
         let result;
 
         if (action === 'upload') {
@@ -70,13 +67,13 @@ export default async function handler(req, res) {
             });
             result = await taskRes.json();
         } else {
-            return res.status(400).json({ error: 'Unknown action' });
+            return NextResponse.json({ error: 'Unknown action' }, { status: 400 });
         }
 
-        return res.status(200).json(result);
+        return NextResponse.json(result);
 
     } catch (error) {
         console.error('Tripo API Error:', error);
-        return res.status(500).json({ error: error.message });
+        return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
