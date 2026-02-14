@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-green-dark: #4A6B4E;
+  --color-green-main: #7A9E7E;
+  --color-green-mid: #5C7E60;
+  --color-green-light: #A8C5AC;
+  --color-green-bg: #EEF2EE;
+  --color-green-border: #C8D8C8;
+
+  --color-terra-main: #C4816A;
+  --color-terra-bg: #FDF5F2;
+  --color-terra-border: #F0DDD6;
+
+  --color-bg-base: #F8F5F0;
+  --color-bg-card: #FDFAF7;
+  --color-bg-muted: #F5F2EF;
+  --color-border-main: #EBE6DF;
+
+  --color-text-primary: #2C2C2C;
+  --color-text-secondary: #555555;
+  --color-text-muted: #8C8C8C;
+  --color-text-light: #B0B0B0;
+
+  --color-dark-bg-1: #2C2C2C;
+  --color-dark-bg-2: #4A4A4A;
+
+  --font-sans: var(--font-noto-sans);
+  --font-serif: var(--font-noto-serif);
+}
+
+/* Custom Utilities */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12) !important;
+}
+
+.btn-pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(196, 129, 106, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 0 8px rgba(196, 129, 106, 0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-serif {
+  font-family: var(--font-serif);
+}
