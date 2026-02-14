@@ -11,9 +11,11 @@ export default function LoginPage() {
     const handleLogin = async (provider) => {
         setIsLoading(true);
         const { error } = await supabase.auth.signInWithOAuth({
-            provider: provider, // 'kakao' or 'naver' (mapped in Supabase)
+            provider: provider, // 'kakao' or 'naver'
             options: {
                 redirectTo: `${location.origin}/auth/callback`,
+                // Kakao: limit scopes to avoid KOE205 if email permission is not granted
+                ...(provider === 'kakao' && { scopes: 'profile_nickname profile_image' }),
             },
         });
 
