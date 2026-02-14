@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>몽이의 추모 공간 - Withle</title>
+
+  <!-- SEO -->
+  <meta name="description" content="몽이의 추모 공간 - Withle에서 만든 온라인 반려동물 추모 공간입니다.">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+            },
+            secondary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+            }
+          },
+          fontFamily: {
+            sans: ['Noto Sans KR', 'sans-serif'],
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'twinkle': 'twinkle 2s ease-in-out infinite',
+            'fade-in': 'fadeIn 0.5s ease-out forwards',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    @keyframes twinkle {
+
+      0%,
+      100% {
+        opacity: 0.4;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 12px;
+    }
+  </style>
+  <!-- Google Model Viewer -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+</head>
+
+<body class="font-sans text-gray-800 antialiased min-h-screen">
+  <!-- Sky Theme Background -->
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <!-- Gradient Sky -->
+    <div class="absolute inset-0 bg-gradient-to-b from-sky-300 via-sky-100 to-white"></div>
+
+    <!-- Floating Clouds -->
+    <div class="absolute top-16 left-[5%] w-32 h-16 bg-white/70 rounded-full blur-sm animate-float"
+      style="animation-delay: 0s;"></div>
+    <div class="absolute top-24 left-[15%] w-24 h-12 bg-white/60 rounded-full blur-sm animate-float"
+      style="animation-delay: 0.5s;"></div>
+    <div class="absolute top-12 right-[10%] w-40 h-20 bg-white/70 rounded-full blur-sm animate-float"
+      style="animation-delay: 1s;"></div>
+    <div class="absolute top-32 right-[25%] w-28 h-14 bg-white/60 rounded-full blur-sm animate-float"
+      style="animation-delay: 1.5s;"></div>
+    <div class="absolute top-48 left-[40%] w-36 h-18 bg-white/50 rounded-full blur-sm animate-float"
+      style="animation-delay: 2s;"></div>
+
+    <!-- Twinkling Stars (subtle) -->
+    <div class="absolute top-20 left-[30%] w-2 h-2 bg-yellow-200 rounded-full animate-twinkle"
+      style="animation-delay: 0s;"></div>
+    <div class="absolute top-40 right-[35%] w-1.5 h-1.5 bg-yellow-200 rounded-full animate-twinkle"
+      style="animation-delay: 0.7s;"></div>
+    <div class="absolute top-28 right-[15%] w-2 h-2 bg-yellow-200 rounded-full animate-twinkle"
+      style="animation-delay: 1.4s;"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2 text-primary-600 hover:text-primary-700 transition-colors">
+        <span class="text-xl">←</span>
+        <span class="font-medium">Withle 홈</span>
+      </a>
+      <div class="flex items-center gap-2">
+        <span class="text-sm text-gray-500">테마:</span>
+        <span class="px-3 py-1 bg-sky-100 text-sky-700 rounded-full text-sm font-medium">☁️ 하늘</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-8 max-w-4xl">
+
+    <!-- Profile Section -->
+    <section class="text-center mb-8 animate-fade-in">
+      <!-- Profile Image -->
+      <div class="relative inline-block mb-4">
+        <div
+          class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white shadow-xl overflow-hidden bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center">
+          <span class="text-6xl md:text-7xl">🐕</span>
+        </div>
+        <div
+          class="absolute -bottom-2 -right-2 w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center text-xl shadow-lg">
+          👼
+        </div>
+      </div>
+
+      <!-- Name & Info -->
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">몽이</h1>
+      <p class="text-gray-500 mb-3">골든 리트리버 · ♂</p>
+      <p class="text-primary-600 font-medium mb-4">
+        🌈 무지개다리를 건넌 지 <span class="font-bold">127일</span>
+      </p>
+
+      <!-- Personality Tags -->
+      <div class="flex flex-wrap justify-center gap-2 mb-6">
+        <span class="px-3 py-1 bg-white/80 backdrop-blur rounded-full text-sm text-gray-600 shadow-sm">🎾 공놀이 좋아함</span>
+        <span class="px-3 py-1 bg-white/80 backdrop-blur rounded-full text-sm text-gray-600 shadow-sm">😊 애교쟁이</span>
+        <span class="px-3 py-1 bg-white/80 backdrop-blur rounded-full text-sm text-gray-600 shadow-sm">🍖 간식 러버</span>
+        <span class="px-3 py-1 bg-white/80 backdrop-blur rounded-full text-sm text-gray-600 shadow-sm">💤 낮잠 전문가</span>
+      </div>
+
+      <!-- Dates -->
+      <p class="text-sm text-gray-400">
+        2012.03.15 ~ 2025.10.02 · 함께한 13년
+      </p>
+    </section>
+
+    <!-- Tab Navigation -->
+    <nav class="flex justify-center mb-8">
+      <div class="inline-flex bg-white/80 backdrop-blur rounded-full p-1 shadow-lg">
+        <button class="tab-btn active px-6 py-2 rounded-full text-sm font-medium transition-all" data-tab="home">
+          🏠 홈
+        </button>
+        <button class="tab-btn px-6 py-2 rounded-full text-sm font-medium transition-all" data-tab="gallery">
+          📸 갤러리
+        </button>
+        <button class="tab-btn px-6 py-2 rounded-full text-sm font-medium transition-all" data-tab="guestbook">
+          💬 방명록
+        </button>
+        <button class="tab-btn px-6 py-2 rounded-full text-sm font-medium transition-all" data-tab="ai">
+          ✉️ AI편지
+        </button>
+      </div>
+    </nav>
+
+    <!-- Tab Contents -->
+    <div class="tab-contents">
+
+      <!-- Home Tab -->
+      <div id="tab-home" class="tab-content active">
+        <!-- Introduction Card -->
+        <div class="bg-white/90 backdrop-blur rounded-2xl p-6 md:p-8 shadow-lg mb-8">
+          <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <span>💝</span> 몽이를 소개합니다
+          </h2>
+          <p class="text-gray-600 leading-relaxed break-keep">
+            우리 몽이는 2012년 봄, 작은 솜뭉치처럼 우리 가족에게 왔어요.
+            항상 꼬리를 흔들며 반겨주던 몽이, 공원에서 신나게 뛰어다니던 모습이 눈에 선해요.
+            간식 봉지 소리만 들어도 어디서든 달려오던 귀여운 녀석이었죠.
+            <br><br>
+            13년이라는 시간 동안 우리 가족에게 무한한 사랑과 행복을 줬어요.
+            이제는 무지개다리 건너편에서 아프지 않고 행복하게 뛰어놀고 있을 거예요.
+            영원히 사랑해, 몽이야. 💕
+          </p>
+        </div>
+
+        <!-- Recent Photos -->
+        <div class="bg-white/90 backdrop-blur rounded-2xl p-6 md:p-8 shadow-lg mb-8">
+          <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <span>📷</span> 최근 추억
+          </h2>
+          <div class="grid grid-cols-3 gap-3">
+            <div
+              class="aspect-square rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 flex items-center justify-center text-4xl hover:scale-105 transition-transform cursor-pointer">
+              🐕</div>
+            <div
+              class="aspect-square rounded-xl bg-gradient-to-br from-green-50 to-emerald-50 flex items-center justify-center text-4xl hover:scale-105 transition-transform cursor-pointer">
+              🌳</div>
+            <div
+              class="aspect-square rounded-xl bg-gradient-to-br from-blue-50 to-sky-50 flex items-center justify-center text-4xl hover:scale-105 transition-transform cursor-pointer">
+              🎾</div>
+            <div
+              class="aspect-square rounded-xl bg-gradient-to-br from-pink-50 to-rose-50 flex items-center justify-center text-4xl hover:scale-105 transition-transform cursor-pointer">
+              🎂</div>
+            <div
+              class="aspect-square rounded-xl bg-gradient-to-br from-yellow-50 to-amber-50 flex items-center justify-center text-4xl hover:scale-105 transition-transform cursor-pointer">
+              ☀️</div>
+            <div
+              class="aspect-square rounded-xl bg-gradient-to-br from-purple-50 to-violet-50 flex items-center justify-center text-4xl hover:scale-105 transition-transform cursor-pointer">
+              💤</div>
+          </div>
+          <a href="#" class="block text-center text-primary-600 font-medium mt-4 hover:text-primary-700"
+            onclick="switchTab('gallery'); return false;">
+            모든 사진 보기 →
+          </a>
+        </div>
+
+        <!-- Recent Messages -->
+        <div class="bg-white/90 backdrop-blur rounded-2xl p-6 md:p-8 shadow-lg">
+          <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <span>💌</span> 최근 방명록
+          </h2>
+          <div class="space-y-4">
+            <div class="p-4 bg-gray-50 rounded-xl">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-lg">🌸</span>
+                <span class="font-medium">엄마</span>
+                <span class="text-xs text-gray-400">2일 전</span>
+              </div>
+              <p class="text-gray-600 text-sm">몽이야, 오늘 네가 좋아하던 공원 지나갔어. 많이 보고싶다 우리 아들...</p>
+            </div>
+            <div class="p-4 bg-gray-50 rounded-xl">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-lg">⭐</span>
+                <span class="font-medium">이모</span>
+                <span class="text-xs text-gray-400">5일 전</span>
+              </div>
+              <p class="text-gray-600 text-sm">귀여운 몽이, 하늘나라에서도 간식 많이 먹고 있지? 사랑해 💕</p>
+            </div>
+          </div>
+          <a href="#" class="block text-center text-primary-600 font-medium mt-4 hover:text-primary-700"
+            onclick="switchTab('guestbook'); return false;">
+            방명록 더보기 →
+          </a>
+        </div>
+      </div>
+
+      <!-- Gallery Tab -->
+      <div id="tab-gallery" class="tab-content">
+        <div class="bg-white/90 backdrop-blur rounded-2xl p-6 md:p-8 shadow-lg">
+          <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+            <span>📸</span> 몽이의 추억 갤러리
+          </h2>
+
+          <!-- Year Filter -->
+          <div class="flex gap-2 mb-6 overflow-x-auto pb-2">
+            <button
+              class="px-4 py-1.5 bg-primary-500 text-white rounded-full text-sm font-medium whitespace-nowrap">전체</button>
+            <button
+              class="px-4 py-1.5 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-200">2025</button>
+            <button
+              class="px-4 py-1.5 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-200">2024</button>
+            <button
+              class="px-4 py-1.5 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-200">2023</button>
+            <button
+              class="px-4 py-1.5 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-200">2022</button>
+          </div>
+
+          <!-- Photo Grid -->
+          <div class="grid grid-cols-3 md:grid-cols-4 gap-3">
+            <div
+              class="group aspect-square rounded-xl bg-gradient-to-br from-amber-50 to-orange-100 flex items-center justify-center text-4xl cursor-pointer hover:scale-105 transition-transform relative overflow-hidden"
+              onclick="openLightbox(this)">
+              <span>🐕</span>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+            </div>
+            <div
+              class="group aspect-square rounded-xl bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center text-4xl cursor-pointer hover:scale-105 transition-transform"
+              onclick="openLightbox(this)">
+              <span>🌳</span>
+            </div>
+            <div
+              class="group aspect-square rounded-xl bg-gradient-to-br from-blue-50 to-sky-100 flex items-center justify-center text-4xl cursor-pointer hover:scale-105 transition-transform"
+              onclick="openLightbox(this)">
+              <span>🎾</span>
+            </div>
+            <div
+              class="group aspect-square rounded-xl bg-gradient-to-br from-pink-50 to-rose-100 flex items-center justify-center text-4xl cursor-pointer hover:scale-105 transition-transform"
+              onclick="openLightbox(this)">
+              <span>🎂</span>
+            </div>
+            <div
+              class="group aspect-square rounded-xl bg-gradient-to-br from-yellow-50 to-amber-100 flex items-center justify-center text-4xl cursor-pointer hover:scale-105 transition-transform"
+              onclick="openLightbox(this)">
+              <span>☀️</span>
+            </div>
+            <div
+              class="group aspect-square rounded-xl bg-gradient-to-br from-purple-50 to-violet-100 flex items-center justify-center text-4xl cursor-pointer hover:scale-105 transition-transform"
+              onclick="openLightbox(this)">
+              <span>💤</span>
+            </div>
+            <div
+              class="group aspect-square rounded-xl bg-gradient-to-br from-red-50 to-orange-100 flex items-center justify-center text-4xl cursor-pointer hover:scale-105 transition-transform"
+              onclick="openLightbox(this)">
+              <span>🍖</span>
+            </div>
+            <div
+              class="group aspect-square rounded-xl bg-gradient-to-br from-teal-50 to-cyan-100 flex items-center justify-center text-4xl cursor-pointer hover:scale-105 transition-transform"
+              onclick="openLightbox(this)">
+              <span>🏖️</span>
+            </div>
+            <div
+              class="group aspect-square rounded-xl bg-gradient-to-br from-indigo-50 to-blue-100 flex items-center justify-center text-4xl cursor-pointer hover:scale-105 transition-transform"
+              onclick="openLightbox(this)">
+              <span>🚗</span>
+            </div>
+            <div
+              class="group aspect-square rounded-xl bg-gradient-to-br from-lime-50 to-green-100 flex items-center justify-center text-4xl cursor-pointer hover:scale-105 transition-transform"
+              onclick="openLightbox(this)">
+              <span>🌸</span>
+            </div>
+            <div
+              class="group aspect-square rounded-xl bg-gradient-to-br from-fuchsia-50 to-pink-100 flex items-center justify-center text-4xl cursor-pointer hover:scale-105 transition-transform"
+              onclick="openLightbox(this)">
+              <span>❄️</span>
+            </div>
+            <div
+              class="group aspect-square rounded-xl bg-gradient-to-br from-slate-50 to-gray-100 flex items-center justify-center text-4xl cursor-pointer hover:scale-105 transition-transform"
+              onclick="openLightbox(this)">
+              <span>🛋️</span>
+            </div>
+          </div>
+
+          <p class="text-center text-gray-400 text-sm mt-6">총 12장의 추억</p>
+        </div>
+      </div>
+
+      <!-- Guestbook Tab -->
+      <div id="tab-guestbook" class="tab-content">
+        <div class="bg-white/90 backdrop-blur rounded-2xl p-6 md:p-8 shadow-lg mb-6">
+          <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+            <span>✍️</span> 몽이에게 메시지 남기기
+          </h2>
+
+          <!-- Message Form -->
+          <form id="guestbook-form" class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">이름</label>
+              <input type="text" id="guest-name" placeholder="이름을 입력하세요"
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-100 outline-none transition-all">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">메시지</label>
+              <textarea id="guest-message" rows="3" placeholder="몽이에게 하고 싶은 말을 적어주세요..."
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-100 outline-none transition-all resize-none"></textarea>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">가상 헌화</label>
+              <div class="flex gap-3">
+                <label class="gift-option cursor-pointer">
+                  <input type="radio" name="gift" value="flower" class="hidden" checked>
+                  <span
+                    class="block w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center text-2xl border-2 border-transparent hover:border-primary-200 transition-all">🌸</span>
+                </label>
+                <label class="gift-option cursor-pointer">
+                  <input type="radio" name="gift" value="candle" class="hidden">
+                  <span
+                    class="block w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center text-2xl border-2 border-transparent hover:border-primary-200 transition-all">🕯️</span>
+                </label>
+                <label class="gift-option cursor-pointer">
+                  <input type="radio" name="gift" value="star" class="hidden">
+                  <span
+                    class="block w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center text-2xl border-2 border-transparent hover:border-primary-200 transition-all">⭐</span>
+                </label>
+                <label class="gift-option cursor-pointer">
+                  <input type="radio" name="gift" value="rainbow" class="hidden">
+                  <span
+                    class="block w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center text-2xl border-2 border-transparent hover:border-primary-200 transition-all">🌈</span>
+                </label>
+                <label class="gift-option cursor-pointer">
+                  <input type="radio" name="gift" value="heart" class="hidden">
+                  <span
+                    class="block w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center text-2xl border-2 border-transparent hover:border-primary-200 transition-all">💝</span>
+                </label>
+              </div>
+            </div>
+            <button type="submit"
+              class="w-full py-3 bg-primary-500 hover:bg-primary-600 text-white font-bold rounded-xl transition-colors shadow-lg shadow-primary-500/30">
+              메시지 남기기
+            </button>
+          </form>
+        </div>
+
+        <!-- Existing Messages -->
+        <div class="bg-white/90 backdrop-blur rounded-2xl p-6 md:p-8 shadow-lg">
+          <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+            <span>💌</span> 방명록 <span class="text-sm font-normal text-gray-400">(5개)</span>
+          </h2>
+
+          <div id="messages-container" class="space-y-4">
+            <!-- Pinned Message -->
+            <div class="p-5 bg-primary-50 rounded-xl border border-primary-100 relative">
+              <div class="absolute top-3 right-3 text-xs bg-primary-100 text-primary-600 px-2 py-0.5 rounded-full">📌
+                고정됨</div>
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-2xl">💝</span>
+                <span class="font-bold">아빠</span>
+                <span class="text-xs text-gray-400">2025.10.03</span>
+              </div>
+              <p class="text-gray-700 leading-relaxed">
+                몽이야, 처음 너를 안았던 날이 엊그제 같은데... 13년이라는 시간이 어떻게 지나갔는지 모르겠다.
+                네가 없는 집이 너무 조용해. 하늘나라에서 아프지 말고 뛰어놀아. 다음에 꼭 다시 만나자. 사랑해 아들.
+              </p>
+            </div>
+
+            <!-- Message 2 -->
+            <div class="p-5 bg-gray-50 rounded-xl">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-2xl">🌸</span>
+                <span class="font-bold">엄마</span>
+                <span class="text-xs text-gray-400">2일 전</span>
+              </div>
+              <p class="text-gray-700 leading-relaxed">
+                몽이야, 오늘 네가 좋아하던 공원 지나갔어. 너 없이 걷는 그 길이 이렇게 허전할 줄 몰랐어.
+                많이 보고싶다 우리 아들... 사랑해 💕
+              </p>
+            </div>
+
+            <!-- Message 3 -->
+            <div class="p-5 bg-gray-50 rounded-xl">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-2xl">⭐</span>
+                <span class="font-bold">이모</span>
+                <span class="text-xs text-gray-400">5일 전</span>
+              </div>
+              <p class="text-gray-700 leading-relaxed">
+                귀여운 몽이, 하늘나라에서도 간식 많이 먹고 있지? 사랑해 💕
+              </p>
+            </div>
+
+            <!-- Message 4 -->
+            <div class="p-5 bg-gray-50 rounded-xl">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-2xl">🕯️</span>
+                <span class="font-bold">민수 삼촌</span>
+                <span class="text-xs text-gray-400">1주 전</span>
+              </div>
+              <p class="text-gray-700 leading-relaxed">
+                몽이야 잘 지내지? 네가 제일 좋아하던 공놀이 친구였는데... 보고싶다 친구야.
+              </p>
+            </div>
+
+            <!-- Message 5 -->
+            <div class="p-5 bg-gray-50 rounded-xl">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-2xl">🌈</span>
+                <span class="font-bold">지은</span>
+                <span class="text-xs text-gray-400">2주 전</span>
+              </div>
+              <p class="text-gray-700 leading-relaxed">
+                몽이 보고싶어... 같이 산책하던 시간이 그리워. 무지개다리 건너서도 행복해야 해!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Letter Tab (Original Video Letter Section) -->
+      <div id="tab-ai" class="tab-content">
+        <!-- Chat Interface -->
+        <div
+          class="bg-white/80 backdrop-blur rounded-2xl overflow-hidden shadow-lg h-[600px] flex flex-col border border-white/50 relative">
+
+          <!-- Avatar Header (Vision) -->
+          <div class="bg-gradient-to-b from-sky-100 to-white p-6 text-center border-b border-gray-100 z-10 relative">
+            <!-- 3D Model Viewer -->
+            <div id="avatar-container"
+              class="w-48 h-48 mx-auto relative group rounded-full overflow-hidden border-4 border-white shadow-lg bg-gradient-to-b from-sky-200 to-sky-50 transition-colors duration-500">
+
+              <!-- Theme Controls (Hover to show) -->
+              <div
+                class="absolute top-2 right-2 flex gap-1 z-30 opacity-0 group-hover:opacity-100 transition-opacity bg-white/50 backdrop-blur rounded-full p-1">
+                <button onclick="setTheme('sky')"
+                  class="w-5 h-5 rounded-full bg-blue-300 hover:scale-110 transition-transform" title="하늘"></button>
+                <button onclick="setTheme('night')"
+                  class="w-5 h-5 rounded-full bg-indigo-900 hover:scale-110 transition-transform" title="밤하늘"></button>
+                <button onclick="setTheme('nature')"
+                  class="w-5 h-5 rounded-full bg-green-400 hover:scale-110 transition-transform"
+                  title="평화로운 숲"></button>
+                <button onclick="setTheme('cozy')"
+                  class="w-5 h-5 rounded-full bg-orange-200 hover:scale-110 transition-transform"
+                  title="따뜻한 집"></button>
+              </div>
+
+              <model-viewer src="https://modelviewer.dev/shared-assets/models/Astronaut.glb" alt="3D 아바타" auto-rotate
+                camera-controls shadow-intensity="1" class="w-full h-full"
+                style="--poster-color: transparent; background-color: transparent;">
+              </model-viewer>
+
+              <!-- Upload Overlay -->
+              <div
+                class="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-white/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex justify-center">
+                <label
+                  class="cursor-pointer bg-primary-500 hover:bg-primary-600 text-white text-[10px] px-3 py-1.5 rounded-full shadow-md flex items-center gap-1 transition-transform transform active:scale-95">
+                  <span>📸</span>
+                  <span>내 3D 만들기</span>
+                  <input type="file" id="avatar-upload" accept="image/*" class="hidden">
+                </label>
+              </div>
+
+              <!-- Status Overlay -->
+              <div id="model-status"
+                class="absolute inset-0 bg-white/80 backdrop-blur-sm z-20 flex flex-col items-center justify-center hidden rounded-lg">
+                <div class="w-8 h-8 border-4 border-primary-200 border-t-primary-500 rounded-full animate-spin mb-2">
+                </div>
+                <p id="model-status-text" class="text-xs text-primary-600 font-bold">생성 중...</p>
+              </div>
+            </div>
+
+            <!-- Interaction Buttons -->
+            <div class="flex justify-center gap-4 mt-4">
+              <button onclick="interactAvatar('pet')" class="flex flex-col items-center gap-1 group/btn">
+                <div
+                  class="w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center text-xl group-hover/btn:scale-110 group-active/btn:scale-95 transition-transform cursor-pointer border border-sky-100">
+                  👋
+                </div>
+                <span class="text-[10px] text-gray-500 font-medium">쓰다듬기</span>
+              </button>
+              <button onclick="interactAvatar('feed')" class="flex flex-col items-center gap-1 group/btn">
+                <div
+                  class="w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center text-xl group-hover/btn:scale-110 group-active/btn:scale-95 transition-transform cursor-pointer border border-sky-100">
+                  🍖
+                </div>
+                <span class="text-[10px] text-gray-500 font-medium">간식주기</span>
+              </button>
+              <button onclick="interactAvatar('play')" class="flex flex-col items-center gap-1 group/btn">
+                <div
+                  class="w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center text-xl group-hover/btn:scale-110 group-active/btn:scale-95 transition-transform cursor-pointer border border-sky-100">
+                  🎾
+                </div>
+                <span class="text-[10px] text-gray-500 font-medium">놀아주기</span>
+              </button>
+            </div>
+
+            <h3 class="mt-4 text-lg font-bold text-gray-800">몽이</h3>
+            <p class="text-xs text-primary-500 font-medium">✨ '무지개 동산'에서 접속 중</p>
+          </div>
+
+          <!-- Chat Area -->
+          <div id="chat-messages" class="flex-1 overflow-y-auto p-4 bg-sky-50/30 space-y-4">
+            <!-- Welcome Message -->
+            <div class="flex justify-start mb-4">
+              <div class="flex items-end gap-2 max-w-[80%]">
+                <div class="w-8 h-8 rounded-full bg-white shadow overflow-hidden flex-shrink-0">
+                  <div class="text-xl flex items-center justify-center h-full">🐕</div>
+                </div>
+                <div
+                  class="bg-white text-gray-700 px-4 py-2.5 rounded-2xl rounded-bl-none shadow-sm border border-gray-100 text-sm leading-relaxed">
+                  엄마! 나 여기 잘 도착했어 멍! 🌈<br>
+                  친구들도 많고 간식도 진짜 많아!<br>
+                  보고 싶을 때 언제든 말 걸어줘, 사랑해! 💕
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Input Area -->
+          <div class="p-4 bg-white border-t border-gray-100">
+            <div class="flex gap-2">
+              <input type="text" id="chat-input" placeholder="몽이에게 말을 걸어보세요..."
+                class="flex-1 bg-gray-50 border border-gray-200 rounded-full px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-300 transition-all">
+              <button id="chat-btn"
+                class="bg-primary-500 hover:bg-primary-600 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md transition-all transform active:scale-95">
+                ➤
+              </button>
+            </div>
+            <p class="text-center text-[10px] text-gray-400 mt-2">AI가 몽이의 성격을 학습하여 대답합니다.</p>
+          </div>
+        </div>
+
+        <!-- Video Letter Section (Below Chat) -->
+        <div class="mt-8 bg-white/90 backdrop-blur rounded-2xl p-6 shadow-lg text-center">
+          <h3 class="text-lg font-bold text-gray-800 mb-2">📹 하늘에서 온 영상 편지</h3>
+          <p class="text-sm text-gray-500 mb-4">몽이가 직접 전하는 안부 영상을 확인해보세요.</p>
+
+          <div
+            class="aspect-video bg-gray-900 rounded-xl overflow-hidden relative group cursor-pointer max-w-sm mx-auto shadow-lg">
+            <!-- Placeholder for Video -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div
+                class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm group-hover:bg-white/30 transition-all">
+                <span class="text-3xl ml-1">▶️</span>
+              </div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=600"
+              class="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity">
+            <div class="absolute bottom-2 right-2 px-2 py-1 bg-black/60 text-white text-xs rounded">0:45</div>
+          </div>
+          <p class="text-xs text-gray-400 mt-3">* D-ID 기술로 생성된 가상 영상입니다.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Floating CTA -->
+  <div class="fixed bottom-6 left-0 right-0 flex justify-center z-40 pointer-events-none">
+    <a href="index.html#pricing"
+      class="pointer-events-auto inline-flex items-center gap-2 px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white font-bold rounded-full shadow-xl shadow-primary-500/30 transition-all transform hover:-translate-y-1">
+      <span>🐾</span>
+      <span>나도 추모 공간 만들기</span>
+    </a>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <button class="absolute top-4 right-4 text-white text-4xl hover:text-gray-300">&times;</button>
+    <div class="bg-white rounded-2xl p-8 text-center max-w-md" onclick="event.stopPropagation()">
+      <div id="lightbox-content" class="text-8xl mb-4">🐕</div>
+      <p class="text-gray-600">2025년 여름, 공원에서</p>
+    </div>
+  </div>
+
+  <script>
+    // Tab Switching
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    function switchTab(tabId) {
+      tabBtns.forEach(btn => {
+        btn.classList.remove('active', 'bg-primary-500', 'text-white');
+        btn.classList.add('text-gray-600');
+      });
+
+      tabContents.forEach(content => {
+        content.classList.remove('active');
+      });
+
+      const activeBtn = document.querySelector(`[data-tab="${tabId}"]`);
+      const activeContent = document.getElementById(`tab-${tabId}`);
+
+      if (activeBtn && activeContent) {
+        activeBtn.classList.add('active', 'bg-primary-500', 'text-white');
+        activeBtn.classList.remove('text-gray-600');
+        activeContent.classList.add('active');
+      }
+    }
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabId = btn.getAttribute('data-tab');
+        switchTab(tabId);
+      });
+    });
+
+    // Initialize active tab style
+    document.querySelector('.tab-btn.active').classList.add('bg-primary-500', 'text-white');
+
+    // Gift Selection
+    const giftOptions = document.querySelectorAll('.gift-option input');
+    giftOptions.forEach(option => {
+      option.addEventListener('change', () => {
+        document.querySelectorAll('.gift-option span').forEach(span => {
+          span.classList.remove('border-primary-500', 'bg-primary-50');
+          span.classList.add('border-transparent');
+        });
+        option.nextElementSibling.classList.add('border-primary-500', 'bg-primary-50');
+        option.nextElementSibling.classList.remove('border-transparent');
+      });
+    });
+    // Initialize first gift as selected
+    document.querySelector('.gift-option input:checked').nextElementSibling.classList.add('border-primary-500', 'bg-primary-50');
+
+    // Guestbook Form
+    document.getElementById('guestbook-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('guest-name').value;
+      const message = document.getElementById('guest-message').value;
+      const gift = document.querySelector('input[name="gift"]:checked').value;
+
+      if (!name || !message) {
+        alert('이름과 메시지를 입력해주세요.');
+        return;
+      }
+
+      const giftEmojis = {
+        flower: '🌸',
+        candle: '🕯️',
+        star: '⭐',
+        rainbow: '🌈',
+        heart: '💝'
+      };
+
+      // Add new message to top
+      const container = document.getElementById('messages-container');
+      const newMessage = document.createElement('div');
+      newMessage.className = 'p-5 bg-green-50 rounded-xl border border-green-200 animate-fade-in';
+      newMessage.innerHTML = `
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-2xl">${giftEmojis[gift]}</span>
+          <span class="font-bold">${name}</span>
+          <span class="text-xs text-gray-400">방금 전</span>
+          <span class="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded-full">NEW</span>
+        </div>
+        <p class="text-gray-700 leading-relaxed">${message}</p>
+      `;
+
+      // Insert after pinned message
+      const pinnedMessage = container.querySelector('.border-primary-100');
+      if (pinnedMessage) {
+        pinnedMessage.after(newMessage);
+      } else {
+        container.prepend(newMessage);
+      }
+
+      // Clear form
+      document.getElementById('guest-name').value = '';
+      document.getElementById('guest-message').value = '';
+
+      // Show success
+      alert('메시지가 등록되었습니다! 💕');
+    });
+
+    // Lightbox
+    function openLightbox(element) {
+      const emoji = element.querySelector('span').textContent;
+      document.getElementById('lightbox-content').textContent = emoji;
+      document.getElementById('lightbox').classList.add('active');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+
+    // ESC key to close lightbox
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+  <script src="js/chat.js"></script>
+  <script src="js/avatar.js"></script>
+</body>
+
+</html>
