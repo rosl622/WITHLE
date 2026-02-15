@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { createClient } from "@/utils/supabase/client";
+
 
 export function useFuneralHomes() {
     const [homes, setHomes] = useState([]);
@@ -9,27 +9,24 @@ export function useFuneralHomes() {
 
     const supabase = createClient();
 
-    // Fetch from Supabase
+    // Fetch from API (CSV Data)
     useEffect(() => {
         async function fetchHomes() {
-            const { data, error } = await supabase.from('funeral_homes').select('*');
+            try {
+                const response = await fetch('/api/funeral-homes');
+                const data = await response.json();
 
-            if (error) {
+                if (Array.isArray(data)) {
+                    setHomes(data);
+                } else {
+                    console.error("Invalid data format received");
+                    setHomes([]);
+                }
+            } catch (error) {
                 console.error("Error fetching homes:", error);
-            } else if (data) {
-                // Map DB fields to Component expected structure
-                const mappedData = data.map(h => ({
-                    ...h,
-                    distance: (Math.random() * 20).toFixed(1), // Mock distance for now (not in DB)
-                    price: {
-                        small: h.price_small,
-                        medium: h.price_medium,
-                        large: h.price_large
-                    }
-                }));
-                setHomes(mappedData);
+            } finally {
+                setIsLoading(false);
             }
-            setIsLoading(false);
         }
 
         fetchHomes();

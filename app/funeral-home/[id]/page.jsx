@@ -5,42 +5,48 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MapPin, Phone, Star, Calendar, ShieldCheck, ArrowLeft } from "lucide-react";
 import BookingModal from "@/components/BookingModal";
-import { createClient } from "@/utils/supabase/client";
+
 
 export default function FuneralHomeDetail({ params }) {
     const { id } = use(params);
-    const homeId = parseInt(id);
+    // id can be string 'csv-0' or number '1'
 
     const [home, setHome] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isBookingOpen, setIsBookingOpen] = useState(false);
 
-    const supabase = createClient();
-
     useEffect(() => {
         async function fetchHome() {
-            const { data, error } = await supabase
-                .from('funeral_homes')
-                .select('*')
-                .eq('id', homeId)
-                .single();
+            try {
+                // Determine if ID is from CSV (starts with 'csv-') or DB (number)
+                // Actually, existing DB IDs were numbers. New ones are 'csv-X'.
+                // Ideally, we just fetch ALL from API and find the one matching ID.
+                // Since the API now returns CSV data, we should look there.
+                // If we still want to support legacy DB data... we removed it from useFuneralHomes, 
+                // so we should probably stick to one source for consistency.
+                // Let's assume we are moving fully to CSV for now as per "make all of them".
 
-            if (error) {
-                console.error("Error fetching home:", error);
-            } else if (data) {
-                setHome({
-                    ...data,
-                    price: {
-                        small: data.price_small,
-                        medium: data.price_medium,
-                        large: data.price_large
+                const response = await fetch('/api/funeral-homes');
+                const data = await response.json();
+
+                if (Array.isArray(data)) {
+                    const found = data.find(h => h.id.toString() === id.toString());
+                    if (found) {
+                        setHome(found);
+                    } else {
+                        // Fallback: If not in CSV, maybe check Supabase?
+                        // For now, let's just log not found.
+                        console.warn("Home not found in CSV data");
                     }
-                });
+                }
+            } catch (error) {
+                console.error("Error fetching home:", error);
+            } finally {
+                setIsLoading(false);
             }
-            setIsLoading(false);
         }
         fetchHome();
-    }, [homeId]);
+    }, [id]);
 
     if (isLoading) {
         return (
