@@ -14,6 +14,8 @@ export default function AdminDashboard() {
     }, []);
 
     async function fetchReservations() {
+        let dbReservations = [];
+
         const { data, error } = await supabase
             .from('reservations')
             .select(`
@@ -28,12 +30,45 @@ export default function AdminDashboard() {
         if (error) {
             console.error("Error fetching reservations:", error);
         } else {
-            setReservations(data);
+            dbReservations = data || [];
         }
+
+        // Fetch mock reservations from localStorage (for CSV items)
+        let mockReservations = [];
+        try {
+            const stored = localStorage.getItem('mock_reservations');
+            if (stored) {
+                mockReservations = JSON.parse(stored);
+            }
+        } catch (e) {
+            console.error("Error fetching mock reservations:", e);
+        }
+
+        // Merge and sort
+        const allReservations = [...mockReservations, ...dbReservations].sort((a, b) =>
+            new Date(b.created_at) - new Date(a.created_at)
+        );
+
+        setReservations(allReservations);
         setIsLoading(false);
     }
 
     const handleStatusChange = async (id, newStatus) => {
+        // Check if it's a mock reservation
+        if (id.toString().startsWith('mock-')) {
+            try {
+                const stored = JSON.parse(localStorage.getItem('mock_reservations') || '[]');
+                const updated = stored.map(res =>
+                    res.id === id ? { ...res, status: newStatus } : res
+                );
+                localStorage.setItem('mock_reservations', JSON.stringify(updated));
+                fetchReservations(); // Refresh locally
+            } catch (e) {
+                console.error("Failed to update mock status:", e);
+            }
+            return;
+        }
+
         const { error } = await supabase
             .from('reservations')
             .update({ status: newStatus })
@@ -80,8 +115,8 @@ export default function AdminDashboard() {
                                         <tr key={res.id} className="hover:bg-green-50/50 transition-colors">
                                             <td className="p-4">
                                                 <span className={`px-2 py-1 rounded-full text-xs font-bold ${res.status === 'confirmed' ? 'bg-green-100 text-green-700' :
-                                                        res.status === 'cancelled' ? 'bg-red-100 text-red-700' :
-                                                            'bg-yellow-100 text-yellow-700'
+                                                    res.status === 'cancelled' ? 'bg-red-100 text-red-700' :
+                                                        'bg-yellow-100 text-yellow-700'
                                                     }`}>
                                                     {res.status === 'confirmed' ? '확정됨' :
                                                         res.status === 'cancelled' ? '취소됨' : '대기중'}

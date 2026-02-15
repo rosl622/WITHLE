@@ -30,13 +30,32 @@ export default function BookingModal({ isOpen, onClose, home }) {
                 // For CSV items specifically, we bypass Supabase because the DB expects integer IDs.
                 // In a real production scenario, we would need to migrate the DB to support string IDs or sync CSV data to DB.
                 // For now, we simulate success to allow the flow to complete.
-                console.log("Mocking reservation for CSV item:", {
+
+                const mockReservation = {
+                    id: `mock-${Date.now()}`,
                     home_id: home.id,
-                    date,
-                    time,
+                    funeral_homes: {
+                        name: home.name,
+                        address: home.address
+                    },
+                    date: date,
+                    time: time,
                     customer_name: name,
-                    customer_phone: phone
-                });
+                    customer_phone: phone,
+                    status: 'pending',
+                    created_at: new Date().toISOString()
+                };
+
+                // Save to localStorage for demo purposes so it shows up in dashboard
+                try {
+                    const existing = JSON.parse(localStorage.getItem('mock_reservations') || '[]');
+                    localStorage.setItem('mock_reservations', JSON.stringify([mockReservation, ...existing]));
+                } catch (e) {
+                    console.error("Failed to save mock reservation:", e);
+                }
+
+                console.log("Mock reservation saved:", mockReservation);
+
                 // Simulate network delay
                 await new Promise(resolve => setTimeout(resolve, 800));
             } else {
