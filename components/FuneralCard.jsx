@@ -39,16 +39,16 @@ export default function FuneralCard({ home }) {
                 <div>
                     <div className="flex justify-between items-start mb-2">
                         <div>
-                            <div className="flex items-center gap-2 mb-1">
-                                <h3 className="text-xl font-bold font-serif text-text-primary">{home.name}</h3>
+                            <div className="flex items-center gap-2 mb-1 flex-wrap">
+                                <h3 className="text-lg md:text-xl font-bold font-serif text-text-primary">{home.name}</h3>
                                 {home.certified && (
-                                    <span className="bg-green-main text-white text-[10px] px-1.5 py-0.5 rounded-md font-bold flex items-center">
+                                    <span className="bg-green-main text-white text-[10px] px-1.5 py-0.5 rounded-md font-bold flex items-center whitespace-nowrap">
                                         <CheckCircle2 className="w-3 h-3 mr-0.5" />
                                         인증
                                     </span>
                                 )}
                             </div>
-                            <p className="text-sm text-text-secondary">{home.address}</p>
+                            <p className="text-xs md:text-sm text-text-secondary">{home.address}</p>
                         </div>
                         <div className="text-right">
                             <div className="flex items-center justify-end text-terra-main font-bold">
@@ -100,11 +100,11 @@ export default function FuneralCard({ home }) {
                     </div>
 
                     <div className="flex gap-2 w-full sm:w-auto">
-                        <a href={`tel:${home.phone}`} className="flex-1 sm:flex-initial flex items-center justify-center gap-1 bg-white border border-terra-main text-terra-main px-4 py-2 rounded-xl text-sm font-bold hover:bg-terra-bg transition-colors">
+                        <a href={`tel:${home.phone}`} className="flex-1 sm:flex-initial flex items-center justify-center gap-1 bg-white border border-terra-main text-terra-main px-3 py-2 md:px-4 rounded-xl text-sm font-bold hover:bg-terra-bg transition-colors whitespace-nowrap">
                             <Phone className="w-4 h-4" />
                             전화
                         </a>
-                        <Link href={`/funeral-home/${home.id}`} className="flex-1 sm:flex-initial flex items-center justify-center bg-green-main hover:bg-green-mid text-white px-6 py-2 rounded-xl text-sm font-bold transition-colors shadow-md hover:shadow-lg">
+                        <Link href={`/funeral-home/${home.id}`} className="flex-1 sm:flex-initial flex items-center justify-center bg-green-main hover:bg-green-mid text-white px-4 py-2 md:px-6 rounded-xl text-sm font-bold transition-colors shadow-md hover:shadow-lg whitespace-nowrap">
                             상세보기
                         </Link>
                     </div>
