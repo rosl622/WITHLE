@@ -50,6 +50,7 @@ export default function Nav() {
                 {/* Center Menu (Absolute centered for precise alignment) */}
                 <div className="hidden md:flex gap-8 text-text-secondary font-medium items-center absolute left-1/2 -translate-x-1/2">
                     <Link href="/" className="hover:text-green-mid transition-colors">장례식장 찾기</Link>
+                    <Link href="/funeral-home/public" className="hover:text-green-mid transition-colors">전국 장묘업체</Link>
                     <Link href="/memorial/intro.html" className="hover:text-green-mid transition-colors">추모 공간</Link>
                     <Link href="#" className="hover:text-green-mid transition-colors">장례절차</Link>
                 </div>
@@ -96,6 +97,9 @@ export default function Nav() {
                     <div className="flex flex-col gap-6 text-lg font-medium text-text-primary">
                         <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="py-2 border-b border-gray-100">
                             장례식장 찾기
+                        </Link>
+                        <Link href="/funeral-home/public" onClick={() => setIsMobileMenuOpen(false)} className="py-2 border-b border-gray-100">
+                            전국 장묘업체
                         </Link>
                         <Link href="/memorial/intro.html" onClick={() => setIsMobileMenuOpen(false)} className="py-2 border-b border-gray-100">
                             추모 공간
