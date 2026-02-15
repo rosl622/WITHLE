@@ -47,8 +47,8 @@ export default function Nav() {
                     <span className="text-xl font-bold text-green-dark font-serif tracking-tight">Withle</span>
                 </Link>
 
-                {/* Center Menu (Absolute centered for precise alignment) */}
-                <div className="hidden md:flex gap-8 text-text-secondary font-medium items-center absolute left-1/2 -translate-x-1/2">
+                {/* Center Menu (Centered using flex-1 and justify-center) */}
+                <div className="hidden md:flex flex-1 justify-center gap-8 text-text-secondary font-medium items-center">
                     <Link href="/" className="hover:text-green-mid transition-colors">장례식장 찾기</Link>
                     <Link href="/funeral-home/public" className="hover:text-green-mid transition-colors">전국 장묘업체</Link>
                     <Link href="/memorial/intro.html" className="hover:text-green-mid transition-colors">추모 공간</Link>

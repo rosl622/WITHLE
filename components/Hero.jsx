@@ -2,7 +2,7 @@ import { MapPin } from "lucide-react";
 
 export default function Hero() {
     return (
-        <section className="relative h-[480px] flex items-center justify-center bg-gradient-to-br from-green-dark via-green-main to-green-light text-white overflow-hidden">
+        <section className="relative min-h-[480px] flex items-center justify-center bg-gradient-to-br from-green-dark via-green-main to-green-light text-white overflow-hidden py-20">
             {/* Abstract Background Shapes */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-20 left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse"></div>

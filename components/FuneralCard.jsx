@@ -20,7 +20,7 @@ export default function FuneralCard({ home }) {
             )}
 
             {/* Image Section */}
-            <div className="w-full md:w-48 h-48 md:h-auto flex-shrink-0 rounded-xl overflow-hidden relative bg-gray-100">
+            <div className="w-full md:w-48 h-56 md:h-auto flex-shrink-0 rounded-xl overflow-hidden relative bg-gray-100">
                 <img
                     src={home.image}
                     alt={home.name}
@@ -90,11 +90,11 @@ export default function FuneralCard({ home }) {
 
                 {/* Footer: Price & Actions */}
                 <div className="flex flex-col sm:flex-row items-end sm:items-center justify-between gap-3 pt-3 border-t border-border-main">
-                    <div className="flex gap-2">
-                        <span className="text-xs px-2 py-1 rounded-full bg-green-bg text-green-mid font-semibold">
+                    <div className="flex flex-wrap gap-2">
+                        <span className="text-xs px-2 py-1 rounded-full bg-green-bg text-green-mid font-semibold whitespace-nowrap">
                             소형 {formatPrice(home.price.small)}
                         </span>
-                        <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-500">
+                        <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-500 whitespace-nowrap">
                             기본 {formatPrice(home.price.medium)}
                         </span>
                     </div>

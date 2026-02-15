@@ -8,14 +8,14 @@ export default function FilterBar({ filters, activeFilter, onFilterChange, activ
             <div className="container mx-auto px-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
 
                 {/* Category Filters */}
-                <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto scrollbar-hide">
+                <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
                     {categories.map((cat) => (
                         <button
                             key={cat}
                             onClick={() => onFilterChange(cat)}
                             className={`whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium transition-all ${activeFilter === cat
-                                    ? "bg-green-dark text-white shadow-md"
-                                    : "bg-bg-muted text-text-secondary hover:bg-green-bg hover:text-green-dark"
+                                ? "bg-green-dark text-white shadow-md"
+                                : "bg-bg-muted text-text-secondary hover:bg-green-bg hover:text-green-dark"
                                 }`}
                         >
                             {cat}
