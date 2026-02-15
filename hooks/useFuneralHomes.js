@@ -7,7 +7,7 @@ export function useFuneralHomes() {
     const [activeFilter, setActiveFilter] = useState("전체");
     const [activeSort, setActiveSort] = useState("distance");
 
-    const supabase = createClient();
+
 
     // Fetch from API (CSV Data)
     useEffect(() => {
