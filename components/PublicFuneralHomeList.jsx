@@ -6,13 +6,15 @@ import FilterBar from "@/components/FilterBar";
 import Hero from "@/components/Hero";
 import FloatingCTA from "@/components/FloatingCTA";
 
-export default function PublicFuneralHomeList({ initialHomes }) {
+export default function PublicFuneralHomeList({ initialHomes = [] }) {
     const [activeFilter, setActiveFilter] = useState("전체");
     const [activeSort, setActiveSort] = useState("distance");
 
     // Filtering & Sorting Logic (similar to useFuneralHomes)
     const filteredHomes = useMemo(() => {
+        if (!initialHomes) return [];
         let result = [...initialHomes];
+
 
         // Filter
         if (activeFilter !== "전체") {

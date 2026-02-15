@@ -3,7 +3,10 @@ import { MapPin, Star, Phone, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 
 export default function FuneralCard({ home }) {
+    if (!home) return null;
+
     const formatPrice = (price) => {
+
         return (price / 10000).toLocaleString() + "만원~";
     };
 
@@ -58,7 +61,8 @@ export default function FuneralCard({ home }) {
 
                     {/* Tags */}
                     <div className="flex flex-wrap gap-1.5 mb-3">
-                        {home.tags.map((tag, index) => (
+                        {(home.tags || []).map((tag, index) => (
+
                             <span key={index} className="text-xs bg-bg-muted text-text-secondary px-2 py-1 rounded-md">
                                 #{tag}
                             </span>
@@ -67,7 +71,8 @@ export default function FuneralCard({ home }) {
 
                     {/* Facilities */}
                     <div className="flex flex-wrap gap-2 text-xs text-text-secondary mb-4">
-                        {home.facilities.slice(0, 4).map((facility, index) => (
+                        {(home.facilities || []).slice(0, 4).map((facility, index) => (
+
                             <span key={index} className="flex items-center">
                                 <span className="w-1 h-1 bg-green-mid rounded-full mr-1"></span>
                                 {facility}
